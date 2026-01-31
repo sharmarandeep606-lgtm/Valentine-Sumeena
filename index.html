@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valentine's for Sumeena 💘</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(135deg, #fff1f7, #ffe6f0);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.9);
+      border-radius: 20px;
+      padding: 25px;
+      width: 90%;
+      max-width: 520px;
+      box-shadow: 0 20px 50px rgba(255, 105, 180, 0.25);
+      text-align: center;
+      position: relative;
+    }
+
+    h1 {
+      margin-top: 0;
+      color: #d9276b;
+    }
+
+    p {
+      font-size: 1.05rem;
+    }
+
+    .music-btn {
+      margin-bottom: 15px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #ff4d8d, #ff8fb7);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .buttons {
+      margin-top: 15px;
+    }
+
+    button.choice {
+      padding: 12px 20px;
+      border-radius: 999px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin: 6px;
+      transition: transform 0.2s;
+    }
+
+    #yesBtn {
+      background: linear-gradient(135deg, #ff4d8d, #ff8fb7);
+      color: white;
+    }
+
+    #noBtn {
+      background: white;
+      color: #ff4d8d;
+      border: 2px solid #ff4d8d;
+    }
+
+    .result {
+      display: none;
+      margin-top: 18px;
+      background: #fff0f7;
+      padding: 15px;
+      border-radius: 15px;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result h2 {
+      margin: 0;
+      color: #d9276b;
+    }
+
+    .footer {
+      margin-top: 14px;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card" id="card">
+
+    <button class="music-btn" id="musicBtn">▶ Play Music</button>
+
+    <h1>Hey Sumeena 💖</h1>
+    <p>Will you be my Valentine? 🌹</p>
+
+    <div class="buttons">
+      <button class="choice" id="yesBtn">Yes 😍</button>
+      <button class="choice" id="noBtn">No 🙈</button>
+    </div>
+
+    <div class="result" id="result">
+      <h2 id="resultTitle"></h2>
+      <p id="resultText"></p>
+    </div>
+
+    <div class="footer">— From your boyfriend 🫶</div>
+
+    <audio id="bgm" loop>
+      <source src="midnight-call.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const result = document.getElementById("result");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultText = document.getElementById("resultText");
+    const musicBtn = document.getElementById("musicBtn");
+    const bgm = document.getElementById("bgm");
+
+    const noMessages = [
+      "Please don’t break my heart 😭💔 Press YES 🥺",
+      "Stop playing 🙈 I love you 💖 Press YES",
+      "Pretty pleaseeee 😭👉👈",
+      "You know you love me 😘 Press YES",
+      "Unlimited hugs if you press YES 🤗",
+      "Okay last chance 😤 (not really)"
+    ];
+
+    let noCount = 0;
+    let yesScale = 1;
+
+    musicBtn.onclick = async () => {
+      try {
+        await bgm.play();
+        musicBtn.textContent = "⏸ Pause Music";
+      } catch (e) {}
+    };
+
+    yesBtn.onclick = () => {
+      resultTitle.textContent = "Congratulations 💘";
+      resultText.textContent =
+        "You are officially my Valentine, Sumeena 💖 I love you so much 🌹";
+      result.classList.add("show");
+      yesBtn.disabled = true;
+      noBtn.disabled = true;
+    };
+
+    noBtn.onclick = () => {
+      noCount++;
+      yesScale = Math.min(1.8, 1 + noCount * 0.15);
+      yesBtn.style.transform = `scale(${yesScale})`;
+
+      resultTitle.textContent = "Noooo 😭";
+      resultText.textContent =
+        noMessages[(noCount - 1) % noMessages.length];
+      result.classList.add("show");
+    };
+  </script>
+</body>
+</html>
